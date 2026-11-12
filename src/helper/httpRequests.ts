@@ -37,12 +37,15 @@ interface ScrapeResult {
     userAgent: string;
 }
 
-const FLARESOLVERR_URL = 'http://10.0.0.186:8191/v1';
-
 export async function scrapeWithFlareSolverr(targetUrl: string): Promise<ScrapeResult | null> {
+    const flareSolverrUrl = process.env.FLARESOLVERR_URL?.trim();
+    if (!flareSolverrUrl) {
+        throw new Error('FLARESOLVERR_URL must be set');
+    }
+
     try {
         const { data } = await axios.post<FlareSolverrResponse>(
-            FLARESOLVERR_URL,
+            flareSolverrUrl,
             {
                 cmd: 'request.get',
                 url: targetUrl,

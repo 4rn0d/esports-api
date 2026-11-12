@@ -13,6 +13,9 @@ To run the API locally against a hosted PostgreSQL database:
 3. Run `npm run dev`. The server loads `.env`; `GET /health` checks the database
    connection.
 
+Set `FLARESOLVERR_URL` to your FlareSolverr `/v1` endpoint when running the
+Sheep Esports scraper. In Komodo, provide a URL reachable from the API container.
+
 ## Deploy with Komodo
 
 The GitHub Actions workflow publishes `ghcr.io/4rn0d/esports-api:latest` on
