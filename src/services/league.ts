@@ -1,5 +1,7 @@
 import type { QueryResultRow } from "pg";
 import { pool } from "../db/pool.ts";
+import { leaguepediaLeagues } from "../providers/leaguepedia/leagues.ts";
+import { mergeLeaguepediaLeagues } from "../providers/leaguepedia/merge.ts";
 import type { League } from "../providers/interface.ts";
 
 interface LeagueRow extends QueryResultRow {
@@ -23,7 +25,7 @@ export async function listLeagues(): Promise<League[]> {
     ORDER BY name
   `);
 
-  return rows.map((row) => ({
+  const leagues = rows.map((row) => ({
     id: String(row.id_league),
     league: row.name,
     leagueShort: row.alternate_name,
@@ -34,4 +36,6 @@ export async function listLeagues(): Promise<League[]> {
     country: row.country,
     logo: row.badge_url,
   }));
+
+  return mergeLeaguepediaLeagues(leagues, await leaguepediaLeagues.fetch());
 }

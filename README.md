@@ -1,5 +1,11 @@
 # esports-api
 
+A TheSportsDB like api for esports games 
+currently supporting:
+- league of legends
+- valorant
+- rocket league
+
 ## Local development
 
 For local PostgreSQL in Docker, copy `.env.example` to `.env`, then run
@@ -15,6 +21,9 @@ To run the API locally against a hosted PostgreSQL database:
 
 Set `FLARESOLVERR_URL` to your FlareSolverr `/v1` endpoint when running the
 Sheep Esports scraper. In Komodo, provide a URL reachable from the API container.
+Leaguepedia's Cargo API enriches existing leagues matched by short name: existing
+descriptive values win, acronym-only display names are replaced by full names, and
+unmatched Leaguepedia entries are not added.
 
 ## Deploy with Komodo
 
