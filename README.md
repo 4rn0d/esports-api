@@ -34,6 +34,16 @@ credentials, change the package visibility to public after the first workflow
 run; otherwise configure Komodo with a GitHub username and a token that has
 `read:packages` access.
 
+## Versioning and releases
+
+Release Please creates or updates a release PR from Conventional Commits on
+`main`. Use `feat:` for minor releases, `fix:` for patches, and `!` or a
+`BREAKING CHANGE:` footer for major releases. Merging the release PR updates
+the version, `CHANGELOG.md`, and an `esports-api-v...` GitHub release. The
+container workflow also tags the image with the version in `package.json`.
+Enable “Allow GitHub Actions to create and approve pull requests” under the
+repository's Actions settings.
+
 `GET /teams` returns `{ "teams": [...] }`; `GET /leagues` returns
 `{ "leagues": [...] }`. Response properties use plain names (`id`, `team`,
 `sport`, `country`) rather than TheSportsDB's type-prefixed names. Translation
