@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-esports}
+      POSTGRES_USER: ${POSTGRES_USER:-esports}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the stack environment}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/001_init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-esports} -d ${POSTGRES_DB:-esports}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    image: ghcr.io/4rn0d/esports-api:latest
+    environment:
+      PGHOST: db
+      PGPORT: 5432
+      PGDATABASE: ${POSTGRES_DB:-esports}
+      PGUSER: ${POSTGRES_USER:-esports}
+      PGPASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the stack environment}
+      PORT: 3123
+      PROVIDER_MIN_INTERVAL_MS: ${PROVIDER_MIN_INTERVAL_MS:-2000}
+      PROVIDER_TIMEOUT_MS: ${PROVIDER_TIMEOUT_MS:-15000}
+      PROVIDER_MAX_ATTEMPTS: ${PROVIDER_MAX_ATTEMPTS:-3}
+    ports:
+      - "3123:3123"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

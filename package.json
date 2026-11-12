@@ -1,0 +1,32 @@
+{
+  "name": "esports-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Esports data API and provider ingestion foundation",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "node --env-file=.env --import=tsx --watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "test": "tsx --test \"tests/**/*.test.ts\""
+  },
+  "dependencies": {
+    "axios": "^1.21.1",
+    "cheerio": "^1.2.0",
+    "fastify": "^5.2.1",
+    "node-html-parser": "^9.0.7",
+    "pg": "^8.13.3",
+    "request-promise": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "@types/pg": "^8.11.11",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com//4rn0d/esports-api.git"
+  }
+}
